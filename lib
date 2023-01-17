@@ -1,0 +1,134 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class Matrix{
+ public:
+ 
+  vector<vector<double>> matrix;
+ 
+  vector<vector<double>> define(int a, int b, int val){
+     
+     
+      if (a<=0 || b<=0){
+         matrix = vector<vector<double>>(1, vector<double>(1, 0));
+         cout << "Error: Matrix dimensions invalid" << endl;
+      }
+     
+      matrix = vector<vector<double>>(a, vector<double>(b, val));
+     
+      return matrix;
+  }
+ 
+  void output_element(int a, int b){
+      cout << matrix[a][b];
+  }
+ 
+  void output_matrix(){
+     
+      for (int a = 0; a<matrix.size(); a++){
+          for (int b = 0; b<matrix[a].size(); b++){
+           cout << "[";
+           cout << matrix[a][b];  
+           cout << "] ";
+          }
+          cout << "\n";
+      }
+  }
+  
+  vector<vector<double>> set_at(int a, int b, double val){
+      matrix[a-1][b-1] = val;
+       
+      return matrix;
+  }
+  
+  double return_at(int a, int b){
+      return matrix[a-1][b-1];
+  }
+  
+  int height(){
+    int dimesion;
+    
+    dimesion = matrix.size();
+    
+    return dimesion;  
+  }
+  
+  int width(){
+    int dimesion;
+    
+    dimesion = matrix[0].size();
+      
+    return dimesion;
+  }
+  
+  
+  Matrix matrix_add(Matrix A, Matrix B){
+      Matrix C;
+      
+      C.define(A.height(), A.width(), 0);
+      
+     if (A.width() != B.width() || A.height() != B.height()){
+        return C;  
+      }
+      
+       for (int a = 1; a<=A.height(); a++){
+        for (int b = 1; b<=B.width(); b++){  
+          
+         C.set_at(a, b, A.return_at(a, b)+B.return_at(a,b));
+       }
+      }
+      
+
+      return C;
+  }
+  
+  Matrix matrix_sub(Matrix A, Matrix B){
+      Matrix C;
+      
+      C.define(A.height(), A.width(), 0);
+      
+     if (A.width() != B.width() || A.height() != B.height()){
+        return C;  
+      }
+      
+       for (int a = 1; a<=A.height(); a++){
+        for (int b = 1; b<=B.width(); b++){  
+          
+         C.set_at(a, b, A.return_at(a, b)-B.return_at(a,b));
+       }
+      }
+      
+
+      return C;
+  }  
+
+ 
+   
+};
+
+int main()
+{
+   
+Matrix mymatr1;
+Matrix mymatr2;
+Matrix mymatr3;
+
+
+
+mymatr1.define(10, 5, 2);
+mymatr1.set_at(1, 2, 3);
+
+mymatr2.define(10, 5, 3);
+mymatr2.set_at(1, 2, 3);
+
+mymatr3 = mymatr1.matrix_sub(mymatr1, mymatr2);
+
+mymatr3.output_matrix();
+
+
+
+
+    return 0;
+}
